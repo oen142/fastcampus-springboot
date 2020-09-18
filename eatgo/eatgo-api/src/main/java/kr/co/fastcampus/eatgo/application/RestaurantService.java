@@ -1,10 +1,9 @@
 package kr.co.fastcampus.eatgo.application;
 
 import kr.co.fastcampus.eatgo.domain.MenuItem;
-import kr.co.fastcampus.eatgo.domain.MenuItemRepositoryImpl;
 import kr.co.fastcampus.eatgo.domain.Restaurant;
 import kr.co.fastcampus.eatgo.domain.RestaurantRepository;
-import kr.co.fastcampus.eatgo.interfaces.MenuItemRepository;
+import kr.co.fastcampus.eatgo.domain.MenuItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,4 +35,7 @@ public class RestaurantService {
         return restaurants;
     }
 
+    public void addRestaurant(Restaurant restaurant) {
+
+    }
 }

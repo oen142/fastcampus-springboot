@@ -1,6 +1,5 @@
 package kr.co.fastcampus.eatgo.domain;
 
-import kr.co.fastcampus.eatgo.interfaces.MenuItemRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

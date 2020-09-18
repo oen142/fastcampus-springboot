@@ -1,4 +1,4 @@
-package kr.co.fastcampus.eatgo.interfaces;
+package kr.co.fastcampus.eatgo.domain;
 
 import kr.co.fastcampus.eatgo.domain.MenuItem;
 

@@ -7,16 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @WebMvcTest(RestaurantController.class)
@@ -31,12 +34,12 @@ class RestaurantControllerTest {
     @Test
     void list() throws Exception {
         List<Restaurant> restaurants = new ArrayList<>();
-        restaurants.add(new Restaurant(1004L , "JOKER House" , "Seoul"));
+        restaurants.add(new Restaurant(1004L, "JOKER House", "Seoul"));
         given(restaurantService.getRestaurants()).willReturn(restaurants);
 
         /*
-        * 실제 서비스 상태와 상관없이 컨트롤러만 테스트 한다.
-        * */
+         * 실제 서비스 상태와 상관없이 컨트롤러만 테스트 한다.
+         * */
 
         mvc.perform(get("/restaurants"))
                 .andExpect(status().isOk())
@@ -46,8 +49,8 @@ class RestaurantControllerTest {
 
     @Test
     void detail() throws Exception {
-        Restaurant restaurant = new Restaurant(1004L , "JOKER House" , "Seoul");
-        Restaurant restaurant2 = new Restaurant(2020L , "Cyber Food" , "Seoul");
+        Restaurant restaurant = new Restaurant(1004L, "JOKER House", "Seoul");
+        Restaurant restaurant2 = new Restaurant(2020L, "Cyber Food", "Seoul");
         restaurant.addMenuItem(new MenuItem("Kimchi"));
         given(restaurantService.getRestaurant(1004L)).willReturn(restaurant);
         given(restaurantService.getRestaurant(2020L)).willReturn(restaurant2);
@@ -65,5 +68,19 @@ class RestaurantControllerTest {
 
     }
 
+
+    @Test
+    void create() throws Exception {
+
+        mvc.perform(post("/restaurants")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"BeRyong\" , \"address\" :\"Busan\"}"))
+                .andExpect(status().isCreated())
+                .andExpect(header().string("location", "/restaurants/1234"))
+                .andExpect(content().string("{}"));
+
+        verify(restaurantService).addRestaurant(any());
+
+    }
 
 }
