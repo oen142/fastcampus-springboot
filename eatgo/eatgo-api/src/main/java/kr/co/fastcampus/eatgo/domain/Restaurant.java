@@ -10,8 +10,13 @@ public class Restaurant {
     private String address;
     private List<MenuItem> menuItems = new ArrayList<>();
 
-    public Restaurant(){
+    public Restaurant() {
 
+    }
+
+    public Restaurant(String name, String address) {
+        this.name = name;
+        this.address = address;
     }
 
     public Restaurant(Long id, String name, String address) {
@@ -31,6 +36,10 @@ public class Restaurant {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getInformation() {
