@@ -11,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
@@ -25,7 +26,7 @@ public class Restaurant {
     private String address;
 
     @Transient
-    private List<MenuItem> menuItems = new ArrayList<>();
+    private List<MenuItem> menuItems;
 
     public Restaurant(String name, String address) {
         this.name = name;
@@ -42,14 +43,9 @@ public class Restaurant {
         return name + " in " + address;
     }
 
-    public void addMenuItem(MenuItem menuItem) {
-        menuItems.add(menuItem);
-    }
 
     public void setMenuItems(List<MenuItem> menuItems) {
-        for (MenuItem menuItem : menuItems) {
-            addMenuItem(menuItem);
-        }
+        this.menuItems = new ArrayList<>(menuItems);
     }
 
     public void updateInformation(String name, String address) {

@@ -39,9 +39,14 @@ public class RestaurantController {
         String name = resource.getName();
         String address = resource.getAddress();
 
-        Restaurant restaurant = new Restaurant(name, address);
-        restaurantService.addRestaurant(restaurant);
-        URI location = new URI("/restaurants/" + restaurant.getId());
+
+        Restaurant restaurant = Restaurant
+                .builder()
+                .name(name)
+                .address(address)
+                .build();
+        Restaurant created = restaurantService.addRestaurant(restaurant);
+        URI location = new URI("/restaurants/" + created.getId());
         return ResponseEntity.created(location).body("{}");
     }
 
@@ -50,7 +55,7 @@ public class RestaurantController {
                          @RequestBody Restaurant resource) {
         String name = resource.getName();
         String address = resource.getAddress();
-        restaurantService.updateRestaurant(id , name , address);
+        restaurantService.updateRestaurant(id, name, address);
         return "{}";
     }
 }
